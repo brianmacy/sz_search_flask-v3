@@ -1,7 +1,7 @@
 # docker build -t brian/sz_search_flask .
 # docker run --user $UID -it -v $PWD:/data -e SENZING_ENGINE_CONFIGURATION_JSON brian/sz_search_flask /dev/null
 
-ARG BASE_IMAGE=senzing/senzingapi-runtime:latest
+ARG BASE_IMAGE=senzing/senzingapi-runtime:3.13.1
 FROM ${BASE_IMAGE}
 
 LABEL Name="brain/sz_search_flask" \
