@@ -3,11 +3,10 @@
 from flask import Flask,request,jsonify
 
 import concurrent.futures
-import argparse
 import sys
 import os
 
-from senzing import G2Engine, G2Exception, G2EngineFlags, G2Diagnostic
+from senzing import G2Engine, G2EngineFlags
 
 exceptions = {
         "ExceptionCode":500,
