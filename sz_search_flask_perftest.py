@@ -3,7 +3,6 @@
 import concurrent.futures
 
 import argparse
-import pathlib
 import orjson
 import itertools
 import requests
@@ -48,7 +47,7 @@ try:
         max_workers = None
 
     beginTime = prevTime = time.time()
-    timeMin = timeMax = timeTot = count = 0;
+    timeMin = timeMax = timeTot = count = 0
     timesAll = []
 
     with open(args.fileToProcess, "r") as fp:
