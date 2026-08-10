@@ -1,0 +1,9 @@
+# Ruff configuration for sz_search_flask-v3
+#
+# BLE001 (blind-except): this service/CLI deliberately catches `Exception` so
+# that a single unexpected engine or I/O failure is reported and handled
+# gracefully (print the error, shut the executor down, exit non-zero) instead
+# of crashing with an unhandled traceback. Narrowing these catches would change
+# runtime behavior, so the broad catch is intentional and this rule is disabled.
+[lint]
+ignore = ["BLE001"]
