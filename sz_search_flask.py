@@ -59,7 +59,8 @@ def do_search():
         task = executor.submit(process_search, engine, user_request, flags, request.args.get('profile'))
         return task.result()
     except Exception as err:
-        return jsonify({'error':str(err)}), exceptionToCode(err)
+        app.logger.exception("Error handling /search request")
+        return jsonify({'error':'Internal server error'}), exceptionToCode(err)
 
 
 try:
