@@ -1,16 +1,15 @@
 #! /usr/bin/env python3
 
-import concurrent.futures
-
 import argparse
-import orjson
+import concurrent.futures
 import itertools
-import requests
-
-import sys
 import os
+import sys
 import time
 from timeit import default_timer as timer
+
+import orjson
+import requests
 
 INTERVAL = 1000
 
@@ -42,7 +41,7 @@ try:
     )
     args = parser.parse_args()
 
-    max_workers = int(os.getenv("SENZING_THREADS_PER_PROCESS", 0))
+    max_workers = int(os.getenv("SENZING_THREADS_PER_PROCESS", "0"))
     if not max_workers:  # reset to null for executors
         max_workers = None
 
@@ -123,9 +122,9 @@ try:
             except Exception as err:
                 print(f"Shutting down due to error: {err}", file=sys.stderr)
                 executor.shutdown()
-                exit(-1)
+                sys.exit(-1)
 
 except Exception as err:
     print(err, file=sys.stderr)
-    exit(-1)
+    sys.exit(-1)
 

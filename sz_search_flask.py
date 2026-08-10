@@ -1,11 +1,10 @@
 #! /usr/bin/env python3
 
-from flask import Flask,request,jsonify
-
 import concurrent.futures
-import sys
 import os
+import sys
 
+from flask import Flask, jsonify, request
 from senzing import G2Engine, G2EngineFlags
 
 exceptions = {
@@ -48,8 +47,6 @@ def process_search(engine, search_json, engine_flags, profile):
 
 @app.route('/search', methods = ['POST'])
 def do_search():
-    global executor
-    global engine
     user_request = request.data.decode()
     flags = G2EngineFlags.G2_SEARCH_BY_ATTRIBUTES_DEFAULT_FLAGS
     if request.args.get('flags'):
@@ -72,21 +69,21 @@ try:
             "Please see https://senzing.zendesk.com/hc/en-us/articles/360038774134-G2Module-Configuration-and-the-Senzing-API",
             file=sys.stderr,
         )
-        exit(-1)
+        sys.exit(-1)
 
     # Initialize the G2Engine
     engine = G2Engine()
     engine.init("sz_search_perftest", engine_config, False)
     engine.primeEngine()
 
-    max_workers = int(os.getenv("SENZING_THREADS_PER_PROCESS", 0))
+    max_workers = int(os.getenv("SENZING_THREADS_PER_PROCESS", "0"))
     if not max_workers:  # reset to null for executors
         max_workers = None
     executor = concurrent.futures.ThreadPoolExecutor(max_workers)
 
 except Exception as err:
     print(err, file=sys.stderr)
-    exit(-1)
+    sys.exit(-1)
 
 if __name__ == '__main__':
     app.run(debug=False,host='0.0.0.0',port=5000,threaded=True)
